@@ -1,0 +1,28 @@
+{
+  "name": "background-removal-demo",
+  "version": "1.0.0",
+  "description": "React 19 + Tailwind 4 background removal demo using @imgly/background-removal",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@imgly/background-removal": "^1.6.0",
+    "onnxruntime-web": "1.21.0-dev.20250206-d981b153d3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^4.1.10",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0"
+  }
+}
