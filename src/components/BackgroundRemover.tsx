@@ -1,5 +1,9 @@
 import React, { useState, useRef, useCallback } from "react";
-import { removeBackground, preload, Config } from "@imgly/background-removal";
+import {
+  preloadBackgroundRemover,
+  removeImageBackground,
+  BackgroundRemoverConfig,
+} from "../services/backgroundRemoverService";
 
 interface ImageData {
   original: string;
@@ -20,7 +24,7 @@ const BackgroundRemover: React.FC = () => {
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const config: Config = {
+  const config: BackgroundRemoverConfig = {
     debug: true,
     device: "cpu",
     model: "isnet_fp16",
@@ -28,12 +32,13 @@ const BackgroundRemover: React.FC = () => {
       format: "image/png",
       quality: 0.9,
     },
-    progress: (key, current, total) => setProgress({ key, current, total }),
   };
 
   const handlePreload = useCallback(async () => {
     try {
-      await preload(config);
+      await preloadBackgroundRemover(config, (key, current, total) =>
+        setProgress({ key, current, total })
+      );
       setIsPreloaded(true);
     } catch (error) {
       console.error("Preload failed", error);
@@ -51,7 +56,11 @@ const BackgroundRemover: React.FC = () => {
           status: "processing",
         };
         setImages([newImage]);
-        const blob = await removeBackground(file, config);
+        const blob = await removeImageBackground(
+          file,
+          config,
+          (key, current, total) => setProgress({ key, current, total })
+        );
         const processedUrl = URL.createObjectURL(blob);
         setImages([
           { ...newImage, processed: processedUrl, status: "completed" },
